@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>love.exe ♥</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Mali:wght@400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#150f24; --panel:rgba(28,20,48,.82); --line:rgba(255,158,203,.28);
+  --pink:#ff9ecb; --pink2:#ff6fae; --lav:#b9a4ff; --mint:#8ff0d0; --txt:#f3e9ff; --dim:#a898c8;
+  --glow:0 0 18px rgba(255,111,174,.28);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Mali','JetBrains Mono',sans-serif;line-height:1.75;overflow-x:hidden}
+code,.mono{font-family:'JetBrains Mono',monospace}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(185,164,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(185,164,255,.05) 1px,transparent 1px);
+  background-size:46px 46px;animation:drift 40s linear infinite}
+@keyframes drift{to{background-position:46px 46px}}
+#rain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55}
+.wrap{position:relative;z-index:2;width:1100px;max-width:94%;margin:0 auto;padding:30px 0 80px}
+
+/* terminal window */
+.win{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:34px 0;box-shadow:var(--glow);backdrop-filter:blur(8px);overflow:hidden;transition:.35s}
+.win:hover{box-shadow:0 0 30px rgba(255,111,174,.4);transform:translateY(-3px)}
+.bar{display:flex;align-items:center;gap:14px;padding:10px 18px;background:rgba(255,158,203,.07);border-bottom:1px solid var(--line)}
+.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%}
+.dots i:nth-child(1){background:#ff7a9c}.dots i:nth-child(2){background:#ffd37a}.dots i:nth-child(3){background:#8ff0d0}
+.bar span{font:.85rem 'JetBrains Mono',monospace;color:var(--lav);letter-spacing:1px}
+.body{padding:28px 32px}
+h2{font-family:'Orbitron',sans-serif;color:var(--pink);font-size:1.35rem;margin-bottom:18px;letter-spacing:1.5px}
+.c{color:var(--dim)} .k{color:var(--lav)} .s{color:var(--mint)} .p{color:var(--pink)}
+
+/* hero */
+.hero{min-height:92vh;display:flex;align-items:center}
+.hero .win{width:100%}
+.hero-grid{display:flex;gap:40px;align-items:center;flex-wrap:wrap}
+.hero-text{flex:1;min-width:300px}
+.prompt{font:.95rem 'JetBrains Mono',monospace;color:var(--mint);margin-bottom:10px}
+h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,3.4rem);color:var(--pink);text-shadow:0 0 22px rgba(255,111,174,.55);line-height:1.15;margin-bottom:14px}
+.typed{font:1.1rem 'JetBrains Mono',monospace;color:var(--lav);min-height:2em}
+.typed::after{content:'▍';animation:blink 1s steps(2) infinite;color:var(--pink)}
+@keyframes blink{50%{opacity:0}}
+.hero-text p{margin:16px 0 24px;color:var(--txt)}
+.btn{display:inline-block;padding:12px 26px;border-radius:10px;border:1px solid var(--pink);background:rgba(255,111,174,.12);color:var(--pink);
+  font:600 .9rem 'JetBrains Mono',monospace;text-decoration:none;cursor:pointer;transition:.25s}
+.btn:hover{background:var(--pink2);color:#150f24;box-shadow:var(--glow)}
+.btn.alt{border-color:var(--lav);color:var(--lav);background:transparent;margin-left:8px}
+.btn.alt:hover{background:var(--lav);color:#150f24}
+
+/* photos */
+.photo{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;border:2px solid var(--pink);box-shadow:0 0 30px rgba(255,111,174,.35);
+  background:repeating-linear-gradient(45deg,#231a3a,#231a3a 12px,#2a1f45 12px,#2a1f45 24px);display:grid;place-items:center;text-align:center;color:var(--dim);font:.8rem 'JetBrains Mono',monospace}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo.big{width:300px;max-width:100%;animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.photo .ph{padding:10px}
+
+/* timeline */
+.log{border-left:2px dashed var(--line);margin-left:8px;padding-left:24px}
+.commit{position:relative;margin-bottom:26px}
+.commit::before{content:'♥';position:absolute;left:-35px;top:0;color:var(--pink2);background:var(--bg);font-size:.95rem}
+.hash{font:.82rem 'JetBrains Mono',monospace;color:var(--pink)}
+.commit b{display:block;color:var(--txt);font-size:1.05rem}
+.commit small{color:var(--dim)}
+
+/* reasons */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px;background:rgba(255,158,203,.05);transition:.3s}
+.card:hover{transform:translateY(-5px) rotate(-1deg);border-color:var(--pink);background:rgba(255,158,203,.12)}
+.card .mono{display:block;color:var(--lav);font-size:.8rem;margin-bottom:6px}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px}
+.pol{background:#fff0f7;border-radius:8px;padding:10px 10px 14px;color:#4a2e5c;transition:.3s;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.pol:nth-child(odd){transform:rotate(-2deg)}.pol:nth-child(even){transform:rotate(2deg)}
+.pol:hover{transform:rotate(0) scale(1.04)}
+.pol .photo{aspect-ratio:1;border:none;box-shadow:none;border-radius:4px}
+.pol p{font:.78rem 'JetBrains Mono',monospace;text-align:center;margin-top:10px}
+
+/* counter */
+.count{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.unit{min-width:96px;text-align:center;padding:16px 10px;border:1px solid var(--line);border-radius:12px;background:rgba(185,164,255,.07)}
+.unit b{display:block;font:900 2rem 'Orbitron',sans-serif;color:var(--pink)}
+.unit span{font:.75rem 'JetBrains Mono',monospace;color:var(--dim)}
+
+/* proposal */
+.ask{text-align:center}
+.code-q{display:inline-block;text-align:left;font:.95rem 'JetBrains Mono',monospace;background:rgba(0,0,0,.25);padding:16px 22px;border-radius:10px;margin:8px 0 26px;line-height:1.9}
+.ask .row{display:flex;justify-content:center;gap:20px;min-height:110px;position:relative;flex-wrap:wrap}
+#yes{font-size:1.05rem}
+#no{position:relative;transition:.2s;border-color:var(--dim);color:var(--dim);background:transparent}
+#result{display:none;margin-top:20px}
+#result h3{font:900 1.5rem 'Orbitron',sans-serif;color:var(--mint);margin-bottom:6px}
+footer{text-align:center;color:var(--dim);font:.8rem 'JetBrains Mono',monospace;margin-top:30px}
+.heart{position:fixed;pointer-events:none;z-index:50;animation:pop 1.8s ease-out forwards}
+@keyframes pop{to{transform:translate(var(--x),var(--y)) scale(1.4);opacity:0}}
+.reveal{opacity:0;transform:translateY(30px);transition:1s}.reveal.on{opacity:1;transform:none}
+@media(max-width:600px){.body{padding:20px}.btn.alt{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<canvas id="rain"></canvas>
+
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+ <div class="win">
+  <div class="bar"><div class="dots"><i></i><i></i><i></i></div><span id="t-title">love@her:~$</span></div>
+  <div class="body hero-grid">
+   <div class="hero-text">
+    <div class="prompt">$ ./i_love_you.sh --forever</div>
+    <h1 id="h-name">ถึง ที่รัก</h1>
+    <div class="typed" id="typed"></div>
+    <p id="h-intro">เราไม่ค่อยเก่งเรื่องพูดหวาน ๆ หรอก แต่เรื่อง code เราเก่งนะ<br>เลยเขียนเว็บนี้ขึ้นมา เพื่อบอกว่า... เรารักเธอมาก ♥</p>
+    <a class="btn" href="#story">&gt; run story.sh</a>
+    <a class="btn alt" href="#ask">&gt; skip_to_end</a>
+   </div>
+   <div class="photo big"><img src="images/main.jpg" alt="" onerror="this.remove()"><div class="ph">🖼️<br>ใส่รูปที่<br>images/main.jpg</div></div>
+  </div>
+ </div>
+</section>
+
+<!-- COUNTER -->
+<div class="win reveal">
+ <div class="bar"><div class="dots"><i></i><i></i><i></i></div><span>uptime.exe</span></div>
+ <div class="body">
+  <h2>♥ SYSTEM UPTIME</h2>
+  <p class="c mono">// ระบบ "เรากับเธอ" ทำงานต่อเนื่องมาแล้ว...</p>
+  <div class="count">
+   <div class="unit"><b id="u-d">0</b><span>days</span></div>
+   <div class="unit"><b id="u-h">0</b><span>hours</span></div>
+   <div class="unit"><b id="u-m">0</b><span>minutes</span></div>
+   <div class="unit"><b id="u-s">0</b><span>seconds</span></div>
+  </div>
+  <p class="c mono" style="text-align:center;margin-top:14px">status: <span class="s">RUNNING</span> · bugs: <span class="p">0</span> · crashes: <span class="p">never</span></p>
+ </div>
+</div>
+
+<!-- STORY -->
+<div class="win reveal" id="story">
+ <div class="bar"><div class="dots"><i></i><i></i><i></i></div><span>git log --oneline --graph</span></div>
+ <div class="body">
+  <h2>♥ OUR COMMIT HISTORY</h2>
+  <div class="log" id="log"></div>
+ </div>
+</div>
+
+<!-- REASONS -->
+<div class="win reveal">
+ <div class="bar"><div class="dots"><i></i><i></i><i></i></div><span>reasons.json</span></div>
+ <div class="body">
+  <h2>♥ WHY_I_LOVE_YOU[ ]</h2>
+  <div class="cards" id="cards"></div>
+ </div>
+</div>
+
+<!-- GALLERY -->
+<div class="win reveal">
+ <div class="bar"><div class="dots"><i></i><i></i><i></i></div><span>memories/ — ls -la</span></div>
+ <div class="body">
+  <h2>♥ MEMORY_STORAGE</h2>
+  <div class="gal" id="gal"></div>
+ </div>
+</div>
+
+<!-- ASK -->
+<div class="win reveal ask" id="ask">
+ <div class="bar"><div class="dots"><i></i><i></i><i></i></div><span>main.js — final_question</span></div>
+ <div class="body">
+  <h2>♥ FINAL QUESTION</h2>
+  <div class="code-q">
+   <span class="k">if</span> (you.<span class="s">loveMe</span>() === <span class="k">true</span>) {<br>
+   &nbsp;&nbsp;<span class="k">return</span> <span class="s">"อยู่ด้วยกันไปตลอดเลยนะ ♥"</span>;<br>
+   }
+  </div>
+  <div class="row" id="row">
+   <button class="btn" id="yes">return true; ♥</button>
+   <button class="btn" id="no">return false;</button>
+  </div>
+  <div id="result">
+   <h3>Compiled successfully ✓</h3>
+   <p id="r-msg">รักเธอที่สุดเลย ขอบคุณที่เป็นแฟนกันนะ ♥</p>
+  </div>
+ </div>
+</div>
+
+<footer>// made with ♥ and too much coffee · <span id="f-name"></span></footer>
+</div>
+
+<script>
+/* ============ แก้ตรงนี้ได้เลย ============ */
+const CONFIG = {
+  herName: "ที่รัก",                 // ชื่อ/ชื่อเล่นแฟน
+  myName: "ชื่อคุณ",                  // ชื่อคุณ
+  startDate: "2024-01-01T00:00:00",  // วันที่เริ่มคบกัน
+  typed: [
+    "i_love_you.exe",
+    "my_favorite_person.py",
+    "forever_and_always.js",
+    "you_are_my_home.html"
+  ],
+  story: [
+    {d:"2024-01-01", t:"first commit", s:"วันที่เราเจอกันครั้งแรก"},
+    {d:"2024-02-14", t:"feat: first date", s:"เดทครั้งแรก ตื่นเต้นจนเขียน code ไม่ออก"},
+    {d:"2024-06-01", t:"merge: we became one", s:"วันที่เราเป็นแฟนกัน"},
+    {d:"2025-01-01", t:"fix: all my bad days", s:"มีเธอแล้ว bug ในชีวิตหายหมด"},
+    {d:"today",      t:"HEAD → still falling for you", s:"และจะ push ความรักนี้ต่อไปทุกวัน"}
+  ],
+  reasons: [
+    "รอยยิ้มของเธอ ทำให้ทุกอย่างรันผ่านหมด",
+    "เธอเป็นคนที่ฟังเราเสมอ แม้ตอนเราพูดเรื่อง code",
+    "อยู่กับเธอแล้ว ใจสงบกว่า production ที่ไม่มี error",
+    "เธอน่ารักที่สุดเลย (เป็น fact ไม่ใช่ opinion)",
+    "เธอทำให้เราอยากเป็นคนที่ดีขึ้นทุกวัน",
+    "ไม่ว่าจะเกิดอะไรขึ้น เธอคือ home ของเรา"
+  ],
+  photos: [   // ใส่รูปไว้ที่ images/photo1.jpg ... แล้วแก้คำบรรยายได้
+    "memory_01.jpg","memory_02.jpg","memory_03.jpg",
+    "memory_04.jpg","memory_05.jpg","memory_06.jpg"
+  ],
+  yesMessage: "รักเธอที่สุดเลย ขอบคุณที่เป็นแฟนกันนะ ♥ จะดูแลเธอให้ดีที่สุด"
+};
+/* ========================================= */
+
+const $ = s => document.querySelector(s);
+$('#h-name').textContent = 'ถึง ' + CONFIG.herName;
+$('#f-name').textContent = 'by ' + CONFIG.myName;
+$('#r-msg').textContent = CONFIG.yesMessage;
+
+/* typewriter */
+(function(){
+  let i=0,j=0,del=false; const el=$('#typed');
+  (function tick(){
+    const w=CONFIG.typed[i];
+    el.textContent=w.slice(0,j);
+    if(!del&&j===w.length){del=true;return setTimeout(tick,1800)}
+    if(del&&j===0){del=false;i=(i+1)%CONFIG.typed.length}
+    j+=del?-1:1; setTimeout(tick,del?40:90);
+  })();
+})();
+
+/* uptime counter */
+function uptime(){
+  const diff=Math.max(0,Date.now()-new Date(CONFIG.startDate));
+  $('#u-d').textContent=Math.floor(diff/864e5);
+  $('#u-h').textContent=Math.floor(diff/36e5)%24;
+  $('#u-m').textContent=Math.floor(diff/6e4)%60;
+  $('#u-s').textContent=Math.floor(diff/1e3)%60;
+}
+uptime(); setInterval(uptime,1000);
+
+/* story */
+const rnd=()=>Math.random().toString(16).slice(2,9);
+$('#log').innerHTML=CONFIG.story.map(c=>`
+  <div class="commit"><span class="hash">${rnd()}</span> <small>${c.d}</small>
+  <b>${c.t}</b><small>${c.s}</small></div>`).join('');
+
+/* reasons */
+$('#cards').innerHTML=CONFIG.reasons.map((r,i)=>`
+  <div class="card"><span class="mono">reasons[${i}] =</span>${r}</div>`).join('');
+
+/* gallery */
+$('#gal').innerHTML=CONFIG.photos.map((p,i)=>`
+  <div class="pol"><div class="photo"><img src="images/photo${i+1}.jpg" alt="" onerror="this.remove()">
+  <div class="ph">🖼️<br>images/photo${i+1}.jpg</div></div><p>${p}</p></div>`).join('');
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('on')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* falling hearts + binary rain */
+(function(){
+  const cv=$('#rain'),ctx=cv.getContext('2d'),size=16;let cols,drops;
+  const chars=['0','1','♥','0','1','♡'];
+  function rs(){cv.width=innerWidth;cv.height=innerHeight;cols=Math.floor(cv.width/size);
+    drops=Array.from({length:cols},()=>Math.random()*cv.height/size)}
+  rs();addEventListener('resize',rs);
+  setInterval(()=>{
+    ctx.fillStyle='rgba(21,15,36,.12)';ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.font=size+'px JetBrains Mono, monospace';
+    drops.forEach((y,i)=>{
+      const ch=chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillStyle=(ch==='♥'||ch==='♡')?'#ff6fae':(i%3?'#6f5aa8':'#b9a4ff');
+      ctx.fillText(ch,i*size,y*size);
+      if(y*size>cv.height&&Math.random()>.975)drops[i]=0;
+      drops[i]+=.6;
+    });
+  },60);
+})();
+
+/* confetti hearts */
+function burst(x,y){
+  for(let i=0;i<40;i++){
+    const h=document.createElement('div');h.className='heart';
+    h.textContent=['♥','💖','💕','✨'][i%4];
+    h.style.left=x+'px';h.style.top=y+'px';h.style.fontSize=(14+Math.random()*22)+'px';
+    h.style.color=['#ff6fae','#ff9ecb','#b9a4ff'][i%3];
+    h.style.setProperty('--x',(Math.random()*500-250)+'px');
+    h.style.setProperty('--y',(Math.random()*-450-50)+'px');
+    document.body.appendChild(h);setTimeout(()=>h.remove(),1900);
+  }
+}
+
+/* yes / no */
+const yes=$('#yes'),no=$('#no');
+let dodge=0;
+const noTexts=['return false;','ลองใหม่นะ 🥺','error: not found','catch(e)','404 ปุ่มนี้ใช้ไม่ได้'];
+function runAway(){
+  dodge++;
+  no.textContent=noTexts[dodge%noTexts.length];
+  no.style.position='relative';
+  no.style.left=(Math.random()*160-80)+'px';
+  no.style.top=(Math.random()*70-10)+'px';
+  yes.style.transform='scale('+Math.min(1+dodge*.12,2)+')';
+}
+no.addEventListener('mouseenter',runAway);
+no.addEventListener('touchstart',e=>{e.preventDefault();runAway()},{passive:false});
+no.addEventListener('click',runAway);
+yes.addEventListener('click',e=>{
+  const r=yes.getBoundingClientRect();
+  burst(r.left+r.width/2,r.top);setTimeout(()=>burst(innerWidth/2,innerHeight/2),300);
+  $('#row').style.display='none';$('.code-q').style.display='none';
+  $('#result').style.display='block';
+});
+
+console.log('%c♥ ถ้าเปิด console มาเจอ แปลว่าเธอก็ชอบ code เหมือนกันสินะ','color:#ff6fae;font-size:14px');
+</script>
+</body>
+</html>
